@@ -17,8 +17,8 @@ public class UserDao {
 	public TermsVo selectTerms() {
 		return mybatis.selectOne("mapper.user.SELECT_TERMS");
 	}
-	public UserVo selectUser() {
-		return mybatis.selectOne("mapper.user.SELECT_USER");
+	public UserVo selectUser(UserVo vo) {
+		return mybatis.selectOne("mapper.user.SELECT_USER", vo);
 	}
 	
 	public void selectUsers() {}

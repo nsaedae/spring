@@ -17,8 +17,8 @@ public class UserService {
 	public TermsVo selectTerms() {
 		return dao.selectTerms();
 	}
-	public UserVo selectUser() {
-		return dao.selectUser();
+	public UserVo selectUser(UserVo vo) {
+		return dao.selectUser(vo);
 	}
 	public void selectUsers() {}
 	public void updateUser() {}

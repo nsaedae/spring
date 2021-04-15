@@ -26,7 +26,7 @@ public class UserController {
 	@PostMapping("/user/login")
 	public String login(UserVo vo, HttpSession sess) {
 		
-		UserVo user = service.selectUser();
+		UserVo user = service.selectUser(vo);
 		
 		if(user != null) {
 			sess.setAttribute("suser", user);
