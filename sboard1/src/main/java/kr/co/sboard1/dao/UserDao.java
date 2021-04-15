@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kr.co.sboard1.vo.TermsVo;
+import kr.co.sboard1.vo.UserVo;
 
 @Repository
 public class UserDao {
@@ -16,7 +17,10 @@ public class UserDao {
 	public TermsVo selectTerms() {
 		return mybatis.selectOne("mapper.user.SELECT_TERMS");
 	}
-	public void selectUser() {}
+	public UserVo selectUser() {
+		return mybatis.selectOne("mapper.user.SELECT_USER");
+	}
+	
 	public void selectUsers() {}
 	public void updateUser() {}
 	public void deleteUser() {}
