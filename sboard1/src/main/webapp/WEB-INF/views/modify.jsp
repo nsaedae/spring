@@ -1,4 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:if test="${suser eq null}">
+	<%-- 로그인 안했으면 로그인 페이지로 리다이렉트 시킴 --%>
+	<c:redirect url="/user/login?result=0"></c:redirect>
+</c:if>
 <!DOCTYPE html>
 <html lang="en">
 <head>

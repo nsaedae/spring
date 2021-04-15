@@ -19,7 +19,11 @@ public class UserController {
 	private UserService service;
 
 	@GetMapping("/user/login")
-	public String login() {
+	public String login(String result, Model model) {
+		
+		
+		model.addAttribute("result", result);
+		
 		return "/user/login";
 	}
 	

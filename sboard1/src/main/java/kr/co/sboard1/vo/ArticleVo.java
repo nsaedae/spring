@@ -1,5 +1,7 @@
 package kr.co.sboard1.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ArticleVo {
 
 	private int seq;
@@ -15,12 +17,20 @@ public class ArticleVo {
 	private String rdate;
 	
 	// 추가필드
-	private String fname;
+	private MultipartFile fname;
+	private String nick;
 	
-	public String getFname() {
+	public String getNick() {
+		return nick;
+	}
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+	
+	public MultipartFile getFname() {
 		return fname;
 	}
-	public void setFname(String fname) {
+	public void setFname(MultipartFile fname) {
 		this.fname = fname;
 	}
 	

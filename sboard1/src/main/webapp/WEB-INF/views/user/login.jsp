@@ -5,6 +5,13 @@
     <meta charset="UTF-8">
     <title>로그인</title>
     <link rel="stylesheet" href="/sboard1/css/style.css"/>
+    <script>
+    	var result = ${result};
+    	if(result == 0){
+    		alert('먼저 로그인을 해야 합니다.');
+    	}
+    
+    </script>
 </head>
 <body>
     <div id="wrapper">
