@@ -6,24 +6,24 @@
 </head>
 <body>
 	<h3>User 수정</h3>
-	<a href="/ch05">처음으로</a>
-	<form action="/ch05/user/modify" method="post">
+	<a th:href="@{/}">처음으로</a>
+	<form th:action="@{/user/modify}" method="post">
 		<table border="1">
 			<tr>
 				<td>아이디</td>
-				<td><input type="text" name="uid" readonly value="${userVo.uid}"/></td>
+				<td><input type="text" name="uid" readonly th:value="${userVo.uid}"/></td>
 			</tr>
 			<tr>
 				<td>이름</td>
-				<td><input type="text" name="name" value="${userVo.name}"/></td>
+				<td><input type="text" name="name" th:value="${userVo.name}"/></td>
 			</tr>
 			<tr>
 				<td>휴대폰</td>
-				<td><input type="text" name="hp" value="${userVo.hp}"/></td>
+				<td><input type="text" name="hp" th:value="${userVo.hp}"/></td>
 			</tr> 
 			<tr>
 				<td>나이</td>
-				<td><input type="number" name="age" value="${userVo.age}"/></td>
+				<td><input type="number" name="age" th:value="${userVo.age}"/></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="right"><input type="submit" value="수정"/></td>

@@ -6,7 +6,7 @@
 </head>
 <body>
 	<h3>User 목록</h3>
-	<a href="/ch05">처음으로</a>
+	<a th:href="@{/}">처음으로</a>
 	<table border="1">
 		<tr>
 			<th>아이디</th>
@@ -15,18 +15,25 @@
 			<th>나이</th>
 			<th>관리</th>
 		</tr>
-		<c:forEach var="user" items="${users}">
-			<tr>
-				<td>${user.uid}</td>
-				<td>${user.name}</td>
-				<td>${user.hp}</td>
-				<td>${user.age}</td>
-				<td>
-					<a href="/ch05/user/modify?uid=${user.uid}">수정</a>
-					<a href="/ch05/user/delete?uid=${user.uid}">삭제</a>
-				</td>
-			</tr>
-		</c:forEach>
+		<tr th:each="user:${users}">
+			<td th:text="${user.uid}">아이디</td>
+			<td th:text="${user.name}">이름</td>
+			<td th:text="${user.hp}">휴대폰</td>
+			<td th:text="${user.age}">나이</td>
+			<td>
+				<a th:href="@{/user/modify(uid=${user.uid})}">수정</a>
+				<a th:href="@{/user/delete(uid=${user.uid})}">삭제</a>
+			</td>
+		</tr>
 	</table>
 </body>
 </html>
+
+
+
+
+
+
+
+
+

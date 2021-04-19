@@ -1,5 +1,7 @@
 package kr.co.ch08.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import kr.co.ch08.vo.UserVo;
@@ -8,9 +10,9 @@ import kr.co.ch08.vo.UserVo;
 public interface UserDao {
 
 	public void insertUser(UserVo vo);
-	public void selectUser();
-	public void selectUsers();
-	public void updateUser();
-	public void deleteUser();
+	public UserVo selectUser(String uid);
+	public List<UserVo> selectUsers();
+	public void updateUser(UserVo vo);
+	public void deleteUser(String uid);
 	
 }

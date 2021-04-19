@@ -4,8 +4,25 @@
 	<insert id="insertUser">
 		INSERT INTO `USER1` VALUES (#{uid}, #{name}, #{hp}, #{age});
 	</insert>
-	<select id="selectUser"  resultType="kr.co.ch08.vo.UserVo"></select>
-	<select id="selectUsers" resultType="kr.co.ch08.vo.UserVo"></select>
-	<update id="updateUser"></update>
-	<delete id="deleteUser"></delete>
+	<select id="selectUser"  resultType="kr.co.ch08.vo.UserVo">
+		SELECT * FROM `USER1` WHERE `uid`=#{uid};
+	</select>
+	<select id="selectUsers" resultType="kr.co.ch08.vo.UserVo">
+		SELECT * FROM `USER1`;	
+	</select>
+	<update id="updateUser">
+		UPDATE `USER1` SET
+						`name`=#{name},
+						`hp`=#{hp},
+						`age`=#{age}
+					   WHERE
+						`uid`=#{uid};
+	</update>
+	<delete id="deleteUser">
+		DELETE FROM `USER1` WHERE `uid`=#{uid};
+	</delete>
 </mapper>
+
+
+
+
