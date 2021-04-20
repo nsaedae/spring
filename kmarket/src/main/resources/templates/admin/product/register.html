@@ -1,6 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="@{admin/_header.html}"/>
+<script>
+
+	$(function(){
+		
+		var select1 = $('select[name=category1]');
+		var select2 = $('select[name=category2]');
+		
+		$.get('/kmarket/admin/product/cate1', function(result){
+			$.each(result, function(i, data){
+				select1.append("<option value='"+data.code1+"'>"+data.title+"</option>");
+			});
+		});
+		
+		select1.change(function(){
+			
+			var code1 = $(this).val();
+			var param = {'code1': code1};
+			
+			$.get('/kmarket/admin/product/cate2', param, function(result){
+				
+				select2.empty();
+				select2.append("<option value='0'>2차 분류 선택</option>");
+				
+				$.each(result, function(i, data){
+					select2.append("<option value='"+data.code2+"'>"+data.title+"</option>");
+				});
+			});
+			
+		});
+		
+		
+	});
+
+
+</script>
+
 <main>
     <th:block th:include="@{admin/_menu.html}"/>
     <section id="admin-product-register">
@@ -26,10 +62,6 @@
                             <td>
                                 <select name="category1">
                                     <option value="cate0">1차 분류 선택</option>
-                                    <option value="cate11">패션·의류·뷰티</option>
-                                    <option value="cate12">가전·디지털</option>
-                                    <option value="cate13">식품·생필품</option>
-                                    <option value="cate14">홈·문구·취미</option>                                                
                                 </select>
                             </td>
                         </tr>
@@ -38,10 +70,6 @@
                             <td>
                                 <select name="category2">
                                     <option value="cate0">2차 분류 선택</option>
-                                    <option value="cate21">남성의류</option>
-                                    <option value="cate22">여성의류</option>
-                                    <option value="cate23">잡화</option>
-                                    <option value="cate24">뷰티</option>                                                
                                 </select>
                             </td>
                         </tr>

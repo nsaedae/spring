@@ -8,6 +8,10 @@
 		SELECT * FROM `km_cate1`;
 	</select>
 	
+	<select id="selectCate2" resultType="kr.co.kmarket.vo.Cate2Vo">
+		SELECT * FROM `km_cate2` WHERE `code1`=#{code1};
+	</select>
+	
 	<select id="selectProduct"  resultType="kr.co.kmarket.vo.MemberVo"></select>
 	<select id="selectProducts" resultType="kr.co.kmarket.vo.MemberVo"></select>
 	<update id="updateProduct"></update>

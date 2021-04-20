@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.kmarket.service.admin.AdminProductService;
 import kr.co.kmarket.vo.Cate1Vo;
+import kr.co.kmarket.vo.Cate2Vo;
 
 @Controller
 public class AdminProductController {
@@ -23,8 +24,15 @@ public class AdminProductController {
 		return cate1List;
 	}
 	
+	@ResponseBody
+	@GetMapping("/admin/product/cate2")
+	public List<Cate2Vo> cate2(int code1) {
+		List<Cate2Vo> cate2List = service.selectCate2(code1);
+		return cate2List;
+	}
 	
-
+	
+	
 	@GetMapping("/admin/product/list")
 	public String list() {
 		return "/admin/product/list";

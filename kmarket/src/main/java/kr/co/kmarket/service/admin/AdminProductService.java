@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.kmarket.dao.admin.AdminProductDao;
 import kr.co.kmarket.vo.Cate1Vo;
+import kr.co.kmarket.vo.Cate2Vo;
 
 @Service
 public class AdminProductService {
@@ -18,6 +19,10 @@ public class AdminProductService {
 	
 	public List<Cate1Vo> selectCate1() {
 		return dao.selectCate1();
+	}
+	
+	public List<Cate2Vo> selectCate2(int code1) {
+		return dao.selectCate2(code1);
 	}
 	
 	public void selectProduct() {}
