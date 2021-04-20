@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kmarket.dao.admin.AdminProductDao">
+
+	<insert id="insertProduct"></insert>
+	
+	<select id="selectCate1" resultType="kr.co.kmarket.vo.Cate1Vo">
+		SELECT * FROM `km_cate1`;
+	</select>
+	
+	<select id="selectProduct"  resultType="kr.co.kmarket.vo.MemberVo"></select>
+	<select id="selectProducts" resultType="kr.co.kmarket.vo.MemberVo"></select>
+	<update id="updateProduct"></update>
+	<delete id="deleteProduct"></delete>
+</mapper>
+
+
+
+
