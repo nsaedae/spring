@@ -24,7 +24,6 @@ public class MainController {
 		List<ProductVo> bestProducts = service.selectBestProducts();
 		List<ProductVo> hitProducts = service.selectHitProducts();
 		
-		model.addAttribute("best1Product", bestProducts.get(0));
 		model.addAttribute("bestProducts", bestProducts);
 		model.addAttribute("hitProducts", hitProducts);
 		

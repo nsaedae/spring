@@ -20,7 +20,7 @@
         <section class="hit">
             <h3><span>히트상품</span></h3>
             <article th:each="product:${hitProducts}">
-                <a href="#">
+                <a th:href="@{/shop/view(code=${product.code})}">
                     <div class="thumb">
                       <img th:src="@{/thumb/{code1}/{code2}/{img}(code1=${product.cate1}, code2=${product.cate2}, img=${product.thumb1})}" alt="t1">
                     </div>
@@ -31,8 +31,9 @@
                       <span>[[${product.discount}]]%</span>
                     </div>
                     <div class="dis_price">
-                      <ins>[[${#numbers.formatInteger(product.price, 3, 'COMMA')}]]</ins>
-                      <span>[[${product.delivery}]]</span>
+                      <ins>[[${#numbers.formatInteger(product.salePrice, 3, 'COMMA')}]]</ins>
+                      <span   th:if="${product.delivery == 0}">무료배송</span>
+                      <strong th:if="${product.delivery > 0}">배송비 [[${#numbers.formatInteger(product.delivery, 3, 'COMMA')}]]</strong>
                     </div>
                 </a>
             </article>
