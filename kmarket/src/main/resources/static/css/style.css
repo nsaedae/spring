@@ -343,6 +343,12 @@ main > section > section {
     height: auto;
     overflow: hidden;
 }
+
+main > section > section > img[alt=loading] {
+	display: block;
+	margin: 0 auto;
+}
+
 main > section > section > article {
     float: left;
     width: 25%;

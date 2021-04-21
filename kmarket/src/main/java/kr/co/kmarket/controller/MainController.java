@@ -31,6 +31,24 @@ public class MainController {
 	}
 	
 	@ResponseBody
+	@GetMapping("/getRecommendProducts")
+	public List<ProductVo> getRecommendProducts() {
+		return service.selectRecommendProducts();
+	}
+	
+	@ResponseBody
+	@GetMapping("/getNewProducts")
+	public List<ProductVo> getNewProducts() {
+		return service.selectLatestProducts();
+	}
+	
+	@ResponseBody
+	@GetMapping("/getDiscountProducts")
+	public List<ProductVo> getDiscountProducts() {
+		return service.selectDiscountProducts();
+	}
+	
+	@ResponseBody
 	@GetMapping("/categories")
 	public List<CategoriesVo> categories() {
 		
