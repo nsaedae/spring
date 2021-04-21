@@ -16,7 +16,6 @@ public class MainController {
 	@Autowired
 	private MainService service;
 	
-	
 	@GetMapping(value = {"/", "/index"})
 	public String index() {
 		return "/index";

@@ -2,11 +2,37 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <script>
 	$(function(){
-		
+		var category = $('.category');
 		$.get('/kmarket/categories', function(result){
-			alert(result);
+			
+			$.each(result, function(i, data){
+				
+				var ico = '';
+				if(i==0) ico = 'fas fa-shopping-bag';
+				if(i==1) ico = 'fas fa-tshirt';
+				if(i==2) ico = 'fas fa-baby-carriage';
+				if(i==3) ico = 'fas fa-utensils';
+				if(i==4) ico = 'fas fa-home';
+				if(i==5) ico = 'fas fa-tv';
+				if(i==6) ico = 'fas fa-running';
+				if(i==7) ico = 'fas fa-car';
+				if(i==8) ico = 'fas fa-book';
+				
+				var tags  = "<li>";
+					tags += "<a href='#'><i class='"+ico+"'></i>"+data.title+"</a>";
+					tags += "<ol></ol>";
+					tags += "</li>";
+				
+				category.append(tags);
+				
+				var ol = category.find('li:last-child > ol');
+				
+				$.each(data.cate2List, function(i, cate2Vo){					
+					var url = "/kmarket/shop/list?cate1="+cate2Vo.code1+"&cate2="+cate2Vo.code2;					
+					ol.append("<li><a href='"+url+"'>"+cate2Vo.title+"</a></li>");
+				});
+			});
 		});
-		
 	});
 
 </script>
@@ -16,12 +42,6 @@
     <!-- 카테고리 -->
     <ul class="category">     
         <li><i class="fa fa-bars" aria-hidden="true"></i>카테고리</li>
-        <li>
-            <a href="#"><i class="fas fa-tshirt"></i>패션·의류·뷰티</a>
-            <ol>
-                <li><a href="#">남성의류</a></li>
-            </ol>
-        </li>
     </ul>
 
     <!-- 베스트상품 배너 -->
