@@ -21,6 +21,23 @@
 		ORDER BY c1.code1, c2.code2;	
 	</select>
 	
+	<select id="selectBestProducts" resultType="kr.co.kmarket.vo.ProductVo">
+		SELECT * FROM `km_product` ORDER BY `sold` DESC LIMIT 5;
+	</select>
+	<select id="selectHitProducts" resultType="kr.co.kmarket.vo.ProductVo">
+		SELECT * FROM `km_product` ORDER BY `hit` DESC LIMIT 8;
+	</select>
+	<select id="selectRecommendProducts" resultType="kr.co.kmarket.vo.ProductVo">
+		SELECT * FROM `km_product` ORDER BY `score` DESC LIMIT 8;
+	</select>
+	<select id="selectLatestProducts" resultType="kr.co.kmarket.vo.ProductVo">
+		SELECT * FROM `km_product` ORDER BY `rdate` DESC LIMIT 8;
+	</select>
+	<select id="selectDiscountProducts" resultType="kr.co.kmarket.vo.ProductVo">
+		SELECT * FROM `km_product` ORDER BY `discount` DESC LIMIT 8;
+	</select>
+	
+	
 	
 </mapper>
 

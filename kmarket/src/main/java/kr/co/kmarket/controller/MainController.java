@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.kmarket.service.MainService;
 import kr.co.kmarket.vo.CategoriesVo;
+import kr.co.kmarket.vo.ProductVo;
 
 @Controller
 public class MainController {
@@ -17,7 +19,15 @@ public class MainController {
 	private MainService service;
 	
 	@GetMapping(value = {"/", "/index"})
-	public String index() {
+	public String index(Model model) {
+		
+		List<ProductVo> bestProducts = service.selectBestProducts();
+		List<ProductVo> hitProducts = service.selectHitProducts();
+		
+		model.addAttribute("best1Product", bestProducts.get(0));
+		model.addAttribute("bestProducts", bestProducts);
+		model.addAttribute("hitProducts", hitProducts);
+		
 		return "/index";
 	}
 	
