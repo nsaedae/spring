@@ -3,11 +3,19 @@ package kr.co.kmarket.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.gson.GsonProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import kr.co.kmarket.service.ShopService;
+import kr.co.kmarket.vo.CartVo;
 import kr.co.kmarket.vo.Cate1Vo;
 import kr.co.kmarket.vo.ProductVo;
 
@@ -50,6 +58,19 @@ public class ShopController {
 	public String cart() {
 		return "/shop/cart";
 	}
+	
+	@ResponseBody
+	@PostMapping("/shop/cart")
+	public String cart(CartVo vo) {
+		
+		int result = service.insertCart(vo);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("result", result);
+		
+		return new Gson().toJson(json);
+	}
+	
 	
 	@GetMapping("/shop/order")
 	public String order() {

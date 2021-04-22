@@ -1,6 +1,60 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="@{_header.html}"/>
+<script th:inline="javascript">
+
+	$(function(){
+		
+		// 장바구니 버튼 클릭
+		$('input.cart').click(function(){
+			
+			var product = [[${productVo}]];
+			var count = 1;
+			var total = (product.price * count) * (1 - product.discount / 100);
+			
+			var jsonData = {
+				'code': product.code,
+				'name': product.name,
+				'count': count,
+				'price': product.price,
+				'discount': product.discount,
+				'point': product.point,
+				'delivery': product.delivery,
+				'total': total
+			}
+			
+			//console.log(jsonData);
+			$.ajax({
+				url: '/kmarket/shop/cart',
+				type: 'post',
+				data: jsonData,
+				dataType: 'json',
+				success: function(data){
+					if(data.result == 1){
+						var result = confirm('장바구니 추가 완료 했습니다.\n장바구니로 이동하시겠습니까?');
+						if(result){
+							location.href = '/kmarket/shop/cart';
+						}
+					}else{
+						alert('장바구니 실패');
+					}
+				}				
+			});
+			
+			
+			
+		});
+		
+		// 주문하기 버튼 클릭
+		$('input.order').click(function(){
+			alert('주문하기 클릭');
+		});		
+		
+	});
+
+
+</script>
+
 <main>
     <th:block th:include="@{_category.html}"/>
 
