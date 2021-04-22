@@ -24,19 +24,24 @@
                     </nav>
                     <p>[[${productVo.descript}]]</p>
                     <nav>
-                        <h5 class="rating star4"><a href="#">상품평보기</a></h5>
+                        <h5 th:if="${productVo.score == 1}" class="rating star1"><a href="#">상품평보기</a></h5>
+                        <h5 th:if="${productVo.score == 2}" class="rating star2"><a href="#">상품평보기</a></h5>
+                        <h5 th:if="${productVo.score == 3}" class="rating star3"><a href="#">상품평보기</a></h5>
+                        <h5 th:if="${productVo.score == 4}" class="rating star4"><a href="#">상품평보기</a></h5>
+                        <h5 th:if="${productVo.score == 5}" class="rating star5"><a href="#">상품평보기</a></h5>
                     </nav>
                     <nav>
                         <div class="org_price">
-                            <del>30,000</del>
-                            <span>10%</span>
-                        </div>
-                        <div class="dis_price">
-                            <ins>27,000</ins>
-                        </div>
+                          <del>[[${#numbers.formatInteger(productVo.price, 3, 'COMMA')}]]</del>
+                          <span>[[${productVo.discount}]]%</span>
+                      	</div>
+                      	<div class="dis_price">
+                          <ins>[[${#numbers.formatInteger(productVo.salePrice, 3, 'COMMA')}]]</ins>
+                      	</div>
                     </nav>
                     <nav>
-                        <span class="delivery">무료배송</span>
+                        <span th:if="${productVo.delivery == 0}" class="delivery">무료배송</span>
+                      	<span th:if="${productVo.delivery > 0}" class="delivery">배송비 [[${#numbers.formatInteger(productVo.delivery, 3, 'COMMA')}]]원</span>
                         <span class="arrival">모레(금) 7/8 도착예정</span>
                         <span class="desc">본 상품은 국내배송만 가능합니다.</span>
                     </nav>
@@ -49,7 +54,7 @@
                     </nav>
                     <img src="../img/vip_plcc_banner.png" alt="100원만 결제해도 1만원 적립!" class="banner" />
                     <div class="total">
-                        <span>35,000</span>
+                        <span>[[${#numbers.formatInteger(productVo.salePrice, 3, 'COMMA')}]]</span>
                         <em>총 상품금액</em>
                     </div>
 
@@ -76,32 +81,32 @@
                 <table border="0">
                     <tr>
                         <td>상품번호</td>
-                        <td>10110125435</td>
+                        <td>[[${productVo.code}]]</td>
                     </tr>
                     <tr>
                         <td>상품상태</td>
-                        <td>새상품</td>
+                        <td>[[${productVo.status}]]</td>
                     </tr>
                     <tr>
                         <td>부가세 면세여부</td>
-                        <td>과세상품</td>
+                        <td>[[${productVo.dutyFree}]]</td>
                     </tr>
                     <tr>
-                        <td>영수증발행</td>
-                        <td>발행가능 - 신용카드 전표, 온라인 현금영수증</td>
-                    </tr>
-                    <tr>
-                        <td>사업자구분</td>
-                        <td>사업자 판매자</td>
-                    </tr>
-                    <tr>
-                        <td>브랜드</td>
-                        <td>블루포스</td>
-                    </tr>
-                    <tr>
-                        <td>원산지</td>
-                        <td>국내생산</td>
-                    </tr>
+                      	<td>영수증발행</td>
+                      	<td>[[${productVo.receipt}]]</td>
+                  	</tr>
+                  	<tr>
+                      	<td>사업자구분</td>
+                      	<td>[[${productVo.bizClass}]]</td>
+                  	</tr>
+                  	<tr>
+                      	<td>브랜드</td>
+                      	<td>[[${productVo.company}]]</td>
+                  	</tr>
+                  	<tr>
+                      	<td>원산지</td>
+                      	<td>[[${productVo.origin}]]</td>
+                  	</tr>
                 </table>
                 <table border="0">
                     <tr>
