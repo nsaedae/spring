@@ -5,23 +5,19 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.gson.GsonProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import kr.co.kmarket.service.ShopService;
 import kr.co.kmarket.vo.CartVo;
-import kr.co.kmarket.vo.Cate1Vo;
 import kr.co.kmarket.vo.MemberVo;
 import kr.co.kmarket.vo.ProductVo;
-
 
 @Controller
 public class ShopController {
@@ -72,8 +68,18 @@ public class ShopController {
 		
 		if(member != null) {
 			vo.setUid(member.getUid());
-			result = service.insertCart(vo);
+			
+			int count = service.selectCountCart(vo);
+			
+			if(count == 0) {
+				// 장바구니에 상품 저장
+				result = service.insertCart(vo);	
+			}else {
+				// 이미 상품이 장바구니에 저장
+				result = 3;
+			}
 		}else {
+			// 로그인을 안 했을 경우
 			result = 2;
 		}
 		

@@ -28,6 +28,10 @@ public class ShopService {
 		return dao.selectProduct(code);
 	}
 	
+	public int selectCountCart(CartVo vo) {
+		return dao.selectCountCart(vo);
+	}
+	
 	public int insertCart(CartVo vo) {
 		return dao.insertCart(vo);
 	}

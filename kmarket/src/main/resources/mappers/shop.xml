@@ -29,6 +29,12 @@
 		WHERE `code`=#{code};  
 	</select>
 	
+	<select id="selectCountCart" resultType="int">
+		SELECT COUNT(*) FROM `km_product_cart`
+		WHERE `uid`=#{uid} AND `code`=#{code};		
+	</select>
+	
+	
 	<insert id="insertCart">
 		INSERT INTO `km_product_cart` SET 
 			`uid`=#{uid},
