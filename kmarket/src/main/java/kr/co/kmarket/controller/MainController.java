@@ -2,6 +2,8 @@ package kr.co.kmarket.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,12 +21,12 @@ public class MainController {
 	private MainService service;
 	
 	@GetMapping(value = {"/", "/index"})
-	public String index(Model model) {
+	public String index(Model model, HttpSession sess) {
 		
 		List<ProductVo> bestProducts = service.selectBestProducts();
 		List<ProductVo> hitProducts = service.selectHitProducts();
 		
-		model.addAttribute("bestProducts", bestProducts);
+		sess.setAttribute("bestProducts", bestProducts);
 		model.addAttribute("hitProducts", hitProducts);
 		
 		return "/index";

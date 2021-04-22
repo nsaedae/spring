@@ -3,7 +3,6 @@
 <th:block th:include="@{_header.html}"/>
 <script>
 	$(function(){
-		
 		var isRecommendOk = false;
 		var isNewOk       = false;
 		var isDiscountOk  = false;
@@ -14,15 +13,13 @@
 			var recommendSection = $('.recommend');
 			var newSection       = $('.new');
 			var discountSection  = $('.discount');
-			
 			var top = $(this).scrollTop();
-			console.log('top :'+top);
 			
-			if(top > 200 && !isRecommendOk){				
+			if(top > 200 && !isRecommendOk){
+				isRecommendOk = true;
+				
 				// 추천상품 데이터 요청하기
 				$.get('/kmarket/getRecommendProducts', function(result){
-					
-					isRecommendOk = true;
 					recommendSection.find('img[alt=loading]').remove();					
 					
 					$.each(result, function(i, data){
@@ -47,10 +44,9 @@
 					});
 				});
 			}else if(top > 780 && !isNewOk){
+				isNewOk = true;
 				// 최신상품 데이터 요청하기
 				$.get('/kmarket/getNewProducts', function(result){
-					
-					isNewOk = true;
 					newSection.find('img[alt=loading]').remove();					
 					
 					$.each(result, function(i, data){
@@ -75,10 +71,11 @@
 					});
 				});
 			}else if(top > 1530 && !isDiscountOk){
+				
+				isDiscountOk = true;
+				
 				// 할인상품 데이터 요청하기
 				$.get('/kmarket/getDiscountProducts', function(result){
-					
-					isDiscountOk = true;
 					discountSection.find('img[alt=loading]').remove();					
 					
 					$.each(result, function(i, data){
