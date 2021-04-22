@@ -2,6 +2,8 @@ package kr.co.kmarket.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.gson.GsonProperties;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import com.google.gson.JsonObject;
 import kr.co.kmarket.service.ShopService;
 import kr.co.kmarket.vo.CartVo;
 import kr.co.kmarket.vo.Cate1Vo;
+import kr.co.kmarket.vo.MemberVo;
 import kr.co.kmarket.vo.ProductVo;
 
 
@@ -61,9 +64,18 @@ public class ShopController {
 	
 	@ResponseBody
 	@PostMapping("/shop/cart")
-	public String cart(CartVo vo) {
+	public String cart(CartVo vo, HttpSession sess) {
 		
-		int result = service.insertCart(vo);
+		MemberVo member = (MemberVo)sess.getAttribute("smember");
+		
+		int result = 0;
+		
+		if(member != null) {
+			vo.setUid(member.getUid());
+			result = service.insertCart(vo);
+		}else {
+			result = 2;
+		}
 		
 		JsonObject json = new JsonObject();
 		json.addProperty("result", result);

@@ -35,8 +35,10 @@
 						if(result){
 							location.href = '/kmarket/shop/cart';
 						}
-					}else{
-						alert('장바구니 실패');
+					}else if(data.result == 2){
+						alert('장바구니에 상품을 저장할려면 로그인을 하셔야 합니다.');
+					}else if(data.result == 3){
+						alert('이미 장바구니에 상품이 저장되었습니다.');
 					}
 				}				
 			});
