@@ -7,7 +7,7 @@
     <!-- 상품 상세페이지 -->
     <section id="view">                
         <nav>
-            <h1>[블루포스] FreeMovement BLUEFORCE</h1>
+            <h1>[[${productVo.name}]]</h1>
             <p>
                 HOME > <span>패션·의류·뷰티</span> > <strong>남성의류</strong>
             </p>
@@ -15,14 +15,14 @@
         <section>
             <article class="info">
                 <div class="image">
-                    <img src="../img/thumb-sample-t1.jpg" alt="상품이미지"/>
+                    <img th:src="@{/thumb/{code1}/{code2}/{img}(code1=${product.cate1}, code2=${product.cate2}, img=${product.thumb2})}" alt="상세 이미지"/>
                 </div>
                 <div class="summary">
                     <nav>
-                        <h1>(주)블루포스</h1>
-                        <h2>상품번호&nbsp;:&nbsp;<span>10010118412</span></h2>
+                        <h1>[[${productVo.company}]]</h1>
+                        <h2>상품번호&nbsp;:&nbsp;<span>[[${productVo.code}]]</span></h2>
                     </nav>
-                    <p>남자 셔츠 남방 남성 와이셔츠 체크남방 스트라이프</p>
+                    <p>[[${productVo.descript}]]</p>
                     <nav>
                         <h5 class="rating star4"><a href="#">상품평보기</a></h5>
                     </nav>
