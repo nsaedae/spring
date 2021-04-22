@@ -26,7 +26,7 @@ public class ShopController {
 	@GetMapping("/shop/list")
 	public String list(Model model, int cate1, int cate2, String sort) {
 		
-		Cate1Vo titles = service.selectTitles(cate1, cate2);
+		ProductVo titles = service.selectTitles(cate1, cate2);
 		List<ProductVo> products = service.selectProducts(cate1, cate2, sort);
 		
 		model.addAttribute("cate1", cate1);

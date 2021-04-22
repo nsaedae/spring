@@ -15,7 +15,7 @@ public class ShopService {
 	@Autowired
 	private ShopDao dao;
 	
-	public Cate1Vo selectTitles(int cate1, int cate2) {
+	public ProductVo selectTitles(int cate1, int cate2) {
 		return dao.selectTitles(cate1, cate2);
 	}
 	

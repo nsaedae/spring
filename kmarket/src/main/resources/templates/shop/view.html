@@ -9,13 +9,13 @@
         <nav>
             <h1>[[${productVo.name}]]</h1>
             <p>
-                HOME > <span>패션·의류·뷰티</span> > <strong>남성의류</strong>
+                HOME > <span>[[${productVo.tit1}]]</span> > <strong>[[${productVo.tit2}]]</strong>
             </p>
         </nav>
         <section>
             <article class="info">
                 <div class="image">
-                    <img th:src="@{/thumb/{code1}/{code2}/{img}(code1=${product.cate1}, code2=${product.cate2}, img=${product.thumb2})}" alt="상세 이미지"/>
+                    <img th:src="@{/thumb/{code1}/{code2}/{img}(code1=${productVo.cate1}, code2=${productVo.cate2}, img=${productVo.thumb2})}" alt="상세 이미지"/>
                 </div>
                 <div class="summary">
                     <nav>
@@ -65,8 +65,7 @@
                     <h1>상품정보</h1>
                 </nav>
                 <!-- 상품상세페이지 이미지 -->
-                <img src="../img/sample_detail1.jpg" alt="">
-                <img src="../img/sample_detail2.jpg" alt="">
+                <img th:src="@{/thumb/{code1}/{code2}/{img}(code1=${productVo.cate1}, code2=${productVo.cate2}, img=${productVo.detail})}" alt="상세 이미지"/>
             </article>
 
             <article class="notice">
