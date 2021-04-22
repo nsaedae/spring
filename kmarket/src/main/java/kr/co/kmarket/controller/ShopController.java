@@ -24,7 +24,7 @@ public class ShopController {
 	
 	@GetMapping("/shop/list")
 	public String list(Model model, int cate1, int cate2) {
-		
+				
 		List<ProductVo> products = service.selectProducts(cate1, cate2);
 		
 		model.addAttribute("products", products);

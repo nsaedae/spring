@@ -31,7 +31,7 @@
           <ul>
             <li>
               <a href="#" class="thumb">
-              	<img th:src="@{/thumb/{code1}/{code2}/{img}(code1=${product.cate1}, code2=${product.cate2}, img=${product.thumb1})}" alt="목록 이미지"/>
+              	<img th:src="@{/thumb/{code1}/{code2}/{img}(code1=${product.cate1}, code2=${product.cate2}, img=${product.thumb2})}" alt="목록 이미지"/>
               </a>
             </li>
             <li>
@@ -42,18 +42,23 @@
             </li>
             <li>
               <div class="dis_price">
-                <ins>27,000</ins>
+                <ins>[[${#numbers.formatInteger(product.salePrice, 3, 'COMMA')}]]</ins>
               </div>
               <div class="org_price">
-                <del>30,000</del>
-                <span>10%</span>
+                <del>[[${#numbers.formatInteger(product.price, 3, 'COMMA')}]]</del>
+               <span>[[${product.discount}]]%</span>
               </div>
-              <span class="freeshipping">무료배송</span>
+              <span th:if="${product.delivery == 0}" class="freeshipping">무료배송</span>
+			  <span th:if="${product.delivery > 0}">배송비 [[${#numbers.formatInteger(product.delivery, 3, 'COMMA')}]]원</span>
             </li>
             <li>
-              <h4 class="seller"><i class="fas fa-home"></i>&nbsp;블루포스</h4>
+              <h4 class="seller"><i class="fas fa-home"></i>&nbsp;[[${product.company}]]</h4>
               <h5 class="badge power">판매자등급</h5>
-              <h6 class="rating star1">상품평</h6>
+              <h6 th:if="${product.score == 1}" class="rating star1">상품평</h6>
+              <h6 th:if="${product.score == 2}" class="rating star2">상품평</h6>
+              <h6 th:if="${product.score == 3}" class="rating star3">상품평</h6>
+              <h6 th:if="${product.score == 4}" class="rating star4">상품평</h6>
+              <h6 th:if="${product.score == 5}" class="rating star5">상품평</h6>
             </li>
           </ul>
         </article>

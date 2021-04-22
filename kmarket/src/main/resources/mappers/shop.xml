@@ -3,7 +3,8 @@
 <mapper namespace="kr.co.kmarket.dao.ShopDao">
 	
 	<select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVo">
-		SELECT * FROM `km_product` WHERE `cate1`=#{cate1} AND `cate2`=#{cate2};
+		SELECT *, Floor(price * (1 - discount / 100)) AS `salePrice` FROM `km_product` 
+		WHERE `cate1`=#{cate1} AND `cate2`=#{cate2};
 	</select>
 
 </mapper>
