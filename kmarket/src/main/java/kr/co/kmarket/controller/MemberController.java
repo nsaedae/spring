@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -23,19 +24,33 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member/login")
-	public String login() {
+	public String login(int result, Model model) {
+		
+		model.addAttribute("result", result);
+		
 		return "/member/login";
 	}
 	
 	@PostMapping("/member/login")
 	public String login(MemberVo vo, HttpSession sess) {
 		
+		int result = vo.getResult();
+		
+		
 		MemberVo member = service.selectMember(vo);
 		
 		if(member != null) {
 			// 일치하는 회원이 맞으면
-			sess.setAttribute("smember", member);	
-			return "redirect:/";
+			sess.setAttribute("smember", member);
+			
+			if(result == 0) {
+				return "redirect:/";	
+			}else if(result == 1) {
+				return "redirect:/shop/cart";
+			}else {
+				return "redirect:/";
+			}
+			
 		}else {
 			// 일치하는 회원이 없으면
 			return "redirect:/member/login?result=0";
