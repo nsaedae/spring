@@ -36,7 +36,7 @@ public class MemberVo {
 	private String etc5;
 	
 	// 추가 필드
-	private int result;
+	private String result;
 }
 
 
