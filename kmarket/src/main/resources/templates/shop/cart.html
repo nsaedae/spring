@@ -17,6 +17,70 @@
 		$('.info tr:nth-child(1) > td:nth-child(2)').text(totCount);
 		
 		// 판매가 집계
+		var tagPrice = $('td.price');
+		var totPrice = 0;
+		
+		$.each(tagPrice, function(){
+			var price = parseInt($(this).text().replace(/,/g, ''));					
+			totPrice += price;
+		});
+		
+		$('.info tr:nth-child(2) > td:nth-child(2)').text(totPrice.toLocaleString());
+		
+		// 할인금액 집계
+		var tagDiscount = $('td.discount');
+		var totDiscount = 0;
+		
+		$.each(tagDiscount, function(){
+			
+			var discount = $(this).text().replace(/%/g, '')
+			
+			if(discount != '-'){
+				var price = $(this).prev().text().replace(/,/g, '');
+				totDiscount += parseInt(price * discount / 100);
+			}			
+			
+			$('.info tr:nth-child(3) > td:nth-child(2)').text(totDiscount.toLocaleString());
+		});
+		
+		// 배송비 집계
+		var tagDelivery = $('td.delivery');
+		var totDelivery = 0;
+		
+		$.each(tagDelivery, function(){
+			
+			var delivery = $(this).text().replace(/,/g, '');
+			
+			if(delivery != '무료배송'){				
+				totDelivery += parseInt(delivery);
+			}			
+			
+			$('.info tr:nth-child(4) > td:nth-child(2)').text(totDelivery.toLocaleString());
+		});
+		
+		// 포인트 집계
+		var tagPoint = $('td.point');
+		var totPoint = 0;
+		
+		$.each(tagPoint, function(){
+			
+			var point = $(this).text().replace(/,/g, '');							
+			totPoint += parseInt(point);					
+			
+			$('.info tr:nth-child(5) > td:nth-child(2)').text(totPoint.toLocaleString());
+		});
+		
+		// 전체주문금액(소계) 집계
+		var tagTotal = $('td.total');
+		var totTotal = 0;
+		
+		$.each(tagTotal, function(){
+			
+			var total = $(this).text().replace(/,/g, '');							
+			totTotal += parseInt(total);					
+			
+			$('.info tr:nth-child(6) > td:nth-child(2)').text(totTotal.toLocaleString());
+		});
 		
 	});
 </script>
@@ -67,8 +131,8 @@
                 </td>
                 <td class="count">[[${product.count}]]</td>
                 <td class="price">[[${#numbers.formatInteger(product.price, 3, 'COMMA')}]]</td>
-                <td class="discout" th:if="${product.discount} > 0">[[${product.discount}]]%</td>
-                <td class="discout" th:unless="${product.discount} > 0">-</td>
+                <td class="discount" th:if="${product.discount} > 0">[[${product.discount}]]%</td>
+                <td class="discount" th:unless="${product.discount} > 0">-</td>
                 <td class="point">[[${product.point}]]</td>
                 <td class="delivery" th:if="${product.delivery} == 0">무료배송</td>
                 <td class="delivery" th:unless="${product.delivery} == 0">[[${#numbers.formatInteger(product.delivery, 3, 'COMMA')}]]</td>
