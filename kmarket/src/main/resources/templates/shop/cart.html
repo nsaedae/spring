@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="@{_header.html}"/>
+<script>
+
+	//전체합계 집계
+	$(function(){	
+		// 상품 수 집계
+		var tagCount = $('td.count');
+		var totCount = 0;
+		
+		$.each(tagCount, function(){
+			var count = parseInt($(this).text());
+			totCount += count;
+		});
+		
+		$('.info tr:nth-child(1) > td:nth-child(2)').text(totCount);
+		
+		// 판매가 집계
+		
+	});
+</script>
+
 <main>
     <th:block th:include="@{_category.html}"/>
 
@@ -24,6 +44,7 @@
                 <th>상품명</th>
                 <th>총수량</th>
                 <th>판매가</th>
+                <th>할인</th>
                 <th>포인트</th>
                 <th>배송비</th>
                 <th>소계</th>
@@ -33,22 +54,25 @@
               <tr class="empty">
                 <td colspan="7">장바구니에 상품이 없습니다.</td>
               </tr>
-              <tr>
+              <tr th:each="product:${products}">
                 <td><input type="checkbox" name=""></td>
                 <td>
                   <article>
-                    <a href="#"><img src="../img/thumb-sample-t2.jpg" alt=""></a>
+                    <a href="#"><img th:src="@{/thumb/{code1}/{code2}/{img}(code1=${product.cate1}, code2=${product.cate2}, img=${product.thumb1})}" alt=""></a>
                     <div>
-                      <h2><a href="#">TH-블락체크 셔츠-그레이2 [면세]</a></h2>
-                      <p>SIZE:M / COLOR:블루 1개</p>
+                      <h2><a href="#">[[${product.name}]]</a></h2>
+                      <p></p>
                     </div>
                   </article>
                 </td>
-                <td>1</td>
-                <td>27,000</td>
-                <td>270</td>
-                <td>무료배송</td>
-                <td>27,000</td>
+                <td class="count">[[${product.count}]]</td>
+                <td class="price">[[${#numbers.formatInteger(product.price, 3, 'COMMA')}]]</td>
+                <td class="discout" th:if="${product.discount} > 0">[[${product.discount}]]%</td>
+                <td class="discout" th:unless="${product.discount} > 0">-</td>
+                <td class="point">[[${product.point}]]</td>
+                <td class="delivery" th:if="${product.delivery} == 0">무료배송</td>
+                <td class="delivery" th:unless="${product.delivery} == 0">[[${#numbers.formatInteger(product.delivery, 3, 'COMMA')}]]</td>
+                <td class="total">[[${#numbers.formatInteger(product.total, 3, 'COMMA')}]]</td>
               </tr>
             </tbody>
           </table>
