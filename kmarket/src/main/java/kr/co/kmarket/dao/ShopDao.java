@@ -15,5 +15,6 @@ public interface ShopDao {
 	public ProductVo selectProduct(int code);
 
 	public int selectCountCart(CartVo vo);
+	public List<CartVo> selectCart(String uid);
 	public int insertCart(CartVo vo);
 }

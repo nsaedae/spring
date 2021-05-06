@@ -34,6 +34,11 @@
 		WHERE `uid`=#{uid} AND `code`=#{code};		
 	</select>
 	
+	<select id="selectCart" resultType="kr.co.kmarket.vo.CartVo">
+		SELECT * FROM `km_product_cart`
+		WHERE `uid`=#{uid}
+		ORDER BY `seq` DESC;
+	</select>
 	
 	<insert id="insertCart">
 		INSERT INTO `km_product_cart` SET 
@@ -48,6 +53,7 @@
 			`total`=#{total},
 			`rdate`=NOW();
 	</insert>
+	
 	
 
 </mapper>

@@ -10,7 +10,7 @@
 			
 			var product = [[${productVo}]];
 			var count = 1;
-			var total = (product.price * count) * (1 - product.discount / 100);
+			var total = parseInt((product.price * count) * (1 - product.discount / 100));
 			
 			var jsonData = {
 				'code': product.code,

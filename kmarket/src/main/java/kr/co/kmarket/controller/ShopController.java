@@ -54,8 +54,22 @@ public class ShopController {
 	}
 	
 	@GetMapping("/shop/cart")
-	public String cart() {
-		return "/shop/cart";
+	public String cart(HttpSession sess, Model model) {
+		
+		MemberVo member = (MemberVo)sess.getAttribute("smember");
+		
+		if(member != null) {
+			// 로그인을 했을 경우
+			String uid = member.getUid();
+			
+			List<CartVo> products = service.selectCart(uid);
+			model.addAttribute("products", products);
+			
+			return "/shop/cart";
+		}else {
+			// 로그인을 안했을 경우
+			return "redirect:/member/login?result=1";			
+		}
 	}
 	
 	@ResponseBody
