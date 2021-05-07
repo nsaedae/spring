@@ -103,6 +103,18 @@ public class ShopController {
 		return new Gson().toJson(json);
 	}
 	
+	@ResponseBody
+	@GetMapping("/shop/cartRemove")
+	public String cartRemove(int[] cartSeqs) {
+		
+		int result = service.deleteCart(cartSeqs);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("result", result);
+		
+		return new Gson().toJson(json);
+	}
+	
 	
 	@GetMapping("/shop/order")
 	public String order() {

@@ -56,6 +56,14 @@
 			`rdate`=NOW();
 	</insert>
 	
+	<delete id="deleteCart">
+		DELETE FROM `km_product_cart` 
+		WHERE `seq` IN
+		<foreach collection="array" item="seq" open="(" close=")" separator=",">
+			#{seq}
+		</foreach>		
+	</delete>
+	
 	
 
 </mapper>

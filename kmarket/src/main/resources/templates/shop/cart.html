@@ -13,7 +13,6 @@
 			var checkedProduct = $('.product_check:checked').parent().parent();
 								
 			// 상품 수 집계
-			console.log('1');
 			var tagCount = checkedProduct.find('.count');
 			var totCount = 0;
 			
@@ -25,7 +24,6 @@
 			$('.info tr:nth-child(1) > td:nth-child(2)').text(totCount);
 			
 			// 판매가 집계
-			console.log('2');
 			var tagPrice = checkedProduct.find('.price');
 			var totPrice = 0;
 			
@@ -37,7 +35,6 @@
 			$('.info tr:nth-child(2) > td:nth-child(2)').text(totPrice.toLocaleString());
 			
 			// 할인금액 집계
-			console.log('3');
 			var tagDiscount = checkedProduct.find('.discount');
 			var totDiscount = 0;
 			
@@ -54,7 +51,6 @@
 			$('.info tr:nth-child(3) > td:nth-child(2)').text(totDiscount.toLocaleString());
 			
 			// 배송비 집계
-			console.log('4');
 			var tagDelivery = checkedProduct.find('.delivery');
 			var totDelivery = 0;
 			
@@ -70,7 +66,6 @@
 			$('.info tr:nth-child(4) > td:nth-child(2)').text(totDelivery.toLocaleString());
 			
 			// 포인트 집계
-			console.log('5');
 			var tagPoint = checkedProduct.find('.point');
 			var totPoint = 0;
 			
@@ -83,7 +78,6 @@
 			$('.info tr:nth-child(5) > td:nth-child(2)').text(totPoint.toLocaleString());
 			
 			// 전체주문금액(소계) 집계
-			console.log('6');
 			var tagTotal = checkedProduct.find('.total');
 			var totTotal = 0;
 			
@@ -126,6 +120,34 @@
 			aggregateProduct();
 		}); // checkProducts change end
 	});
+	
+	// 삭제하기 버튼
+	$(function(){
+		
+		$('input[name=del]').click(function(){
+			
+			var checkedProducts = $('.product_check:checked');
+			var cartSeqs = [];
+			
+			checkedProducts.each(function(i, product){				
+				cartSeqs.push(product.value);				
+			});
+			
+			var params = {"cartSeqs": cartSeqs};
+	
+			$.ajax({
+				url: '/kmarket/shop/cartRemove',				
+				type: 'get',
+				traditional: true,
+				data: params,
+				dataType: 'json',
+				success: function(data){
+					alert(data);
+				}
+			});
+		});
+	});
+	
 </script>
 
 <main>
@@ -162,7 +184,7 @@
                 <td colspan="7">장바구니에 상품이 없습니다.</td>
               </tr>
               <tr th:each="product:${products}">
-                <td><input type="checkbox" class="product_check" th:name="${product.code}" checked></td>
+                <td><input type="checkbox" class="product_check" th:value="${product.seq}" checked></td>
                 <td>
                   <article>
                     <a href="#"><img th:src="@{/thumb/{code1}/{code2}/{img}(code1=${product.cate1}, code2=${product.cate2}, img=${product.thumb1})}" alt=""></a>
@@ -183,7 +205,7 @@
               </tr>
             </tbody>
           </table>
-          <input type="button" name="del" value="선택삭제">
+          <input type="button" name="del" value="선택삭제"/>
         </form>
       </section>
 
@@ -215,7 +237,7 @@
             <td>0</td>
           </tr>
         </table>
-        <input type="button" name="" value="주문하기">
+        <input type="button" name="order" value="주문하기">
       </div>
     </section>
 </main>
