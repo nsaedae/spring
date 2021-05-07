@@ -2,17 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="@{_header.html}"/>
 <script>
-	
+
+	// 최초 집계 실행
 	aggregateProduct();
 
-	function aggregateProduct() {
-	
+	function aggregateProduct() {	
 		//전체합계 집계
-		$(function(){	
+		$(function(){
 			
 			var checkedProduct = $('.product_check:checked').parent().parent();
-			
+								
 			// 상품 수 집계
+			console.log('1');
 			var tagCount = checkedProduct.find('.count');
 			var totCount = 0;
 			
@@ -24,6 +25,7 @@
 			$('.info tr:nth-child(1) > td:nth-child(2)').text(totCount);
 			
 			// 판매가 집계
+			console.log('2');
 			var tagPrice = checkedProduct.find('.price');
 			var totPrice = 0;
 			
@@ -35,6 +37,7 @@
 			$('.info tr:nth-child(2) > td:nth-child(2)').text(totPrice.toLocaleString());
 			
 			// 할인금액 집계
+			console.log('3');
 			var tagDiscount = checkedProduct.find('.discount');
 			var totDiscount = 0;
 			
@@ -45,12 +48,13 @@
 				if(discount != '-'){
 					var price = $(this).prev().text().replace(/,/g, '');
 					totDiscount += parseInt(price * discount / 100);
-				}			
-				
-				$('.info tr:nth-child(3) > td:nth-child(2)').text(totDiscount.toLocaleString());
+				}								
 			});
 			
+			$('.info tr:nth-child(3) > td:nth-child(2)').text(totDiscount.toLocaleString());
+			
 			// 배송비 집계
+			console.log('4');
 			var tagDelivery = checkedProduct.find('.delivery');
 			var totDelivery = 0;
 			
@@ -60,62 +64,61 @@
 				
 				if(delivery != '무료배송'){				
 					totDelivery += parseInt(delivery);
-				}			
-				
-				$('.info tr:nth-child(4) > td:nth-child(2)').text(totDelivery.toLocaleString());
+				}
 			});
 			
+			$('.info tr:nth-child(4) > td:nth-child(2)').text(totDelivery.toLocaleString());
+			
 			// 포인트 집계
+			console.log('5');
 			var tagPoint = checkedProduct.find('.point');
 			var totPoint = 0;
 			
 			$.each(tagPoint, function(){
 				
 				var point = $(this).text().replace(/,/g, '');							
-				totPoint += parseInt(point);					
-				
-				$('.info tr:nth-child(5) > td:nth-child(2)').text(totPoint.toLocaleString());
+				totPoint += parseInt(point);				
 			});
 			
+			$('.info tr:nth-child(5) > td:nth-child(2)').text(totPoint.toLocaleString());
+			
 			// 전체주문금액(소계) 집계
+			console.log('6');
 			var tagTotal = checkedProduct.find('.total');
 			var totTotal = 0;
 			
-			$.each(tagTotal, function(){
-				
+			$.each(tagTotal, function(){				
 				var total = $(this).text().replace(/,/g, '');							
-				totTotal += parseInt(total);					
-				
-				$('.info tr:nth-child(6) > td:nth-child(2)').text(totTotal.toLocaleString());
+				totTotal += parseInt(total);							
 			});
+			
+			$('.info tr:nth-child(6) > td:nth-child(2)').text(totTotal.toLocaleString());
 			
 		});
 		
-	} // aggregateProduct end
-	
+	} // aggregateProduct function end
 	
 	// 상품 체크박스
 	$(function(){
-		
 		var checkAll      = $('input[name=all]');
 		var checkProducts = $('input.product_check');
 		
-		checkAll.click(function(){
+		checkAll.change(function(){
 			
 			var productCheck = $('.product_check');
 			
 			if($(this).is(':checked') == false){
 				// 모든 체크박스 해제
-				productCheck.prop('checked', false);				
-				// 집계 초기화
-				aggregateProduct();
+				productCheck.prop('checked', false);
 			}else{
 				// 전체 체크
 				productCheck.prop('checked', true);
-				// 전체 집계
-				aggregateProduct();
 			}
-		}); // checkAll click end
+
+			// 집계 재조정
+			aggregateProduct();
+			
+		}); // checkAll change end
 		
 		// 개별상품 체크박스 변경시
 		checkProducts.change(function(){
