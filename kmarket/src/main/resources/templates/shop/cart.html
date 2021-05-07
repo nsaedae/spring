@@ -2,126 +2,127 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="@{_header.html}"/>
 <script>
-
-	//전체합계 집계
-	$(function(){	
-		// 상품 수 집계
-		var tagCount = $('td.count');
-		var totCount = 0;
-		
-		$.each(tagCount, function(){
-			var count = parseInt($(this).text());
-			totCount += count;
-		});
-		
-		$('.info tr:nth-child(1) > td:nth-child(2)').text(totCount);
-		
-		// 판매가 집계
-		var tagPrice = $('td.price');
-		var totPrice = 0;
-		
-		$.each(tagPrice, function(){
-			var price = parseInt($(this).text().replace(/,/g, ''));					
-			totPrice += price;
-		});
-		
-		$('.info tr:nth-child(2) > td:nth-child(2)').text(totPrice.toLocaleString());
-		
-		// 할인금액 집계
-		var tagDiscount = $('td.discount');
-		var totDiscount = 0;
-		
-		$.each(tagDiscount, function(){
-			
-			var discount = $(this).text().replace(/%/g, '')
-			
-			if(discount != '-'){
-				var price = $(this).prev().text().replace(/,/g, '');
-				totDiscount += parseInt(price * discount / 100);
-			}			
-			
-			$('.info tr:nth-child(3) > td:nth-child(2)').text(totDiscount.toLocaleString());
-		});
-		
-		// 배송비 집계
-		var tagDelivery = $('td.delivery');
-		var totDelivery = 0;
-		
-		$.each(tagDelivery, function(){
-			
-			var delivery = $(this).text().replace(/,/g, '');
-			
-			if(delivery != '무료배송'){				
-				totDelivery += parseInt(delivery);
-			}			
-			
-			$('.info tr:nth-child(4) > td:nth-child(2)').text(totDelivery.toLocaleString());
-		});
-		
-		// 포인트 집계
-		var tagPoint = $('td.point');
-		var totPoint = 0;
-		
-		$.each(tagPoint, function(){
-			
-			var point = $(this).text().replace(/,/g, '');							
-			totPoint += parseInt(point);					
-			
-			$('.info tr:nth-child(5) > td:nth-child(2)').text(totPoint.toLocaleString());
-		});
-		
-		// 전체주문금액(소계) 집계
-		var tagTotal = $('td.total');
-		var totTotal = 0;
-		
-		$.each(tagTotal, function(){
-			
-			var total = $(this).text().replace(/,/g, '');							
-			totTotal += parseInt(total);					
-			
-			$('.info tr:nth-child(6) > td:nth-child(2)').text(totTotal.toLocaleString());
-		});
-		
-	});
 	
-	// 체크박스 all
+	aggregateProduct();
+
+	function aggregateProduct() {
+	
+		//전체합계 집계
+		$(function(){	
+			
+			var checkedProduct = $('.product_check:checked').parent().parent();
+			
+			// 상품 수 집계
+			var tagCount = checkedProduct.find('.count');
+			var totCount = 0;
+			
+			$.each(tagCount, function(){
+				var count = parseInt($(this).text());
+				totCount += count;
+			});
+			
+			$('.info tr:nth-child(1) > td:nth-child(2)').text(totCount);
+			
+			// 판매가 집계
+			var tagPrice = checkedProduct.find('.price');
+			var totPrice = 0;
+			
+			$.each(tagPrice, function(){
+				var price = parseInt($(this).text().replace(/,/g, ''));					
+				totPrice += price;
+			});
+			
+			$('.info tr:nth-child(2) > td:nth-child(2)').text(totPrice.toLocaleString());
+			
+			// 할인금액 집계
+			var tagDiscount = checkedProduct.find('.discount');
+			var totDiscount = 0;
+			
+			$.each(tagDiscount, function(){
+				
+				var discount = $(this).text().replace(/%/g, '')
+				
+				if(discount != '-'){
+					var price = $(this).prev().text().replace(/,/g, '');
+					totDiscount += parseInt(price * discount / 100);
+				}			
+				
+				$('.info tr:nth-child(3) > td:nth-child(2)').text(totDiscount.toLocaleString());
+			});
+			
+			// 배송비 집계
+			var tagDelivery = checkedProduct.find('.delivery');
+			var totDelivery = 0;
+			
+			$.each(tagDelivery, function(){
+				
+				var delivery = $(this).text().replace(/,/g, '');
+				
+				if(delivery != '무료배송'){				
+					totDelivery += parseInt(delivery);
+				}			
+				
+				$('.info tr:nth-child(4) > td:nth-child(2)').text(totDelivery.toLocaleString());
+			});
+			
+			// 포인트 집계
+			var tagPoint = checkedProduct.find('.point');
+			var totPoint = 0;
+			
+			$.each(tagPoint, function(){
+				
+				var point = $(this).text().replace(/,/g, '');							
+				totPoint += parseInt(point);					
+				
+				$('.info tr:nth-child(5) > td:nth-child(2)').text(totPoint.toLocaleString());
+			});
+			
+			// 전체주문금액(소계) 집계
+			var tagTotal = checkedProduct.find('.total');
+			var totTotal = 0;
+			
+			$.each(tagTotal, function(){
+				
+				var total = $(this).text().replace(/,/g, '');							
+				totTotal += parseInt(total);					
+				
+				$('.info tr:nth-child(6) > td:nth-child(2)').text(totTotal.toLocaleString());
+			});
+			
+		});
+		
+	} // aggregateProduct end
+	
+	
+	// 상품 체크박스
 	$(function(){
 		
-		var checkAll    = $('input[name=all]');
-		var tagCount    = $('.info tr:nth-child(1) > td:nth-child(2)');
-		var tagPrice    = $('.info tr:nth-child(2) > td:nth-child(2)');
-		var tagDiscount = $('.info tr:nth-child(3) > td:nth-child(2)');
-		var tagDelivery = $('.info tr:nth-child(4) > td:nth-child(2)');
-		var tagPoint    = $('.info tr:nth-child(5) > td:nth-child(2)');
-		var tagTotal    = $('.info tr:nth-child(6) > td:nth-child(2)');
+		var checkAll      = $('input[name=all]');
+		var checkProducts = $('input.product_check');
 		
 		checkAll.click(function(){
 			
 			var productCheck = $('.product_check');
 			
-			
 			if($(this).is(':checked') == false){
 				// 모든 체크박스 해제
-				productCheck.attr('checked', false);
-				
+				productCheck.prop('checked', false);				
 				// 집계 초기화
-				tagCount.text('0');
-				tagPrice.text('0');
-				tagDiscount.text('0');
-				tagDelivery.text('0');
-				tagPoint.text('0');
-				tagTotal.text('0');
-				
+				aggregateProduct();
 			}else{
 				// 전체 체크
-				productCheck.attr('checked', true);
+				productCheck.prop('checked', true);
+				// 전체 집계
+				aggregateProduct();
 			}
-			
-		});
+		}); // checkAll click end
 		
-		
+		// 개별상품 체크박스 변경시
+		checkProducts.change(function(){
+			// 상품 재집계
+			aggregateProduct();
+		}); // checkProducts change end
 	});
-	
 </script>
 
 <main>
@@ -188,15 +189,15 @@
         <table border="0">
           <tr>
             <td>상품수</td>
-            <td>1</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>상품금액</td>
-            <td>27,000</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>할인금액</td>
-            <td>-1,000</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>배송비</td>
@@ -204,11 +205,11 @@
           </tr>              
           <tr>
             <td>포인트</td>
-            <td>260</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>전체주문금액</td>
-            <td>26,000</td>
+            <td>0</td>
           </tr>
         </table>
         <input type="button" name="" value="주문하기">
