@@ -142,7 +142,18 @@
 				data: params,
 				dataType: 'json',
 				success: function(data){
-					alert(data);
+					// DB 삭제 후 화면삭제 진행
+					//alert("삭제 갯수 : "+data.result);
+					
+					// 다시 장바구니를 요청해서 화면갱신(refresh) 하는 방법 
+					//location.href='/kmarket/shop/cart';
+					
+					// 화면갱신(refresh)없이 삭제 상품만 제거 최종화면 출력
+					var inputCheck = $('input.product_check:checked');	
+					inputCheck.parent().parent().remove();
+					
+					// 집계 초기화
+					aggregateProduct();
 				}
 			});
 		});
