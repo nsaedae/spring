@@ -12,7 +12,7 @@
 			//var checkedProduct = $('.product_check:checked').parent().parent();
 								
 			// 상품 수 집계
-			var tagCount = $('.count');
+			var tagCount = $('.order > .count');
 			var totCount = 0;
 			
 			$.each(tagCount, function(){
@@ -23,7 +23,7 @@
 			$('.info tr:nth-child(1) > td:nth-child(2)').text(totCount);
 			
 			// 판매가 집계
-			var tagPrice = $('.price');
+			var tagPrice = $('.order > .price');
 			var totPrice = 0;
 			
 			$.each(tagPrice, function(){
@@ -34,7 +34,7 @@
 			$('.info tr:nth-child(2) > td:nth-child(2)').text(totPrice.toLocaleString());
 			
 			// 할인금액 집계
-			var tagDiscount = $('.discount');
+			var tagDiscount = $('.order > .discount');
 			var totDiscount = 0;
 			
 			$.each(tagDiscount, function(){
@@ -50,7 +50,7 @@
 			$('.info tr:nth-child(3) > td:nth-child(2)').text(totDiscount.toLocaleString());
 			
 			// 배송비 집계
-			var tagDelivery = $('.delivery');
+			var tagDelivery = $('.order > .delivery');
 			var totDelivery = 0;
 			
 			$.each(tagDelivery, function(){
@@ -64,20 +64,8 @@
 			
 			$('.info tr:nth-child(4) > td:nth-child(2)').text(totDelivery.toLocaleString());
 			
-			// 포인트 집계
-			var tagPoint = $('.point');
-			var totPoint = 0;
-			
-			$.each(tagPoint, function(){
-				
-				var point = $(this).text().replace(/,/g, '');							
-				totPoint += parseInt(point);				
-			});
-			
-			$('.info tr:nth-child(5) > td:nth-child(2)').text(totPoint.toLocaleString());
-			
 			// 전체주문금액(소계) 집계
-			var tagTotal = $('.total');
+			var tagTotal = $('.order > .total');
 			var totTotal = 0;
 			
 			$.each(tagTotal, function(){				
@@ -124,7 +112,7 @@
                       <tr class="empty">
                         <td colspan="7">장바구니에 상품이 없습니다.</td>
                       </tr>
-                      <tr th:each="order:${orders}">
+                      <tr class="order" th:each="order:${orders}">
 		                <td>
 		                  <article>
 		                    <a href="#"><img th:src="@{/thumb/{code1}/{code2}/{img}(code1=${order.cate1}, code2=${order.cate2}, img=${order.thumb1})}" alt=""></a>
@@ -202,23 +190,23 @@
                     <div>
                         <span>신용카드</span>
                         <p>
-                            <label><input type="radio" name="payment" value="type1"/>신용카드 결제</label>
-                            <label><input type="radio" name="payment" value="type2"/>체크카드 결제</label>                                
+                            <label><input type="radio" name="payment" value="1"/>신용카드 결제</label>
+                            <label><input type="radio" name="payment" value="2"/>체크카드 결제</label>                                
                         </p>
                     </div>
                     <div>
                         <span>계좌이체</span>
                         <p>
-                            <label><input type="radio" name="payment" value="type3"/>실시간 계좌이체</label>
-                            <label><input type="radio" name="payment" value="type4"/>무통장 입금</label>                                
+                            <label><input type="radio" name="payment" value="3"/>실시간 계좌이체</label>
+                            <label><input type="radio" name="payment" value="4"/>무통장 입금</label>                                
                         </p>
                     </div>
                     <div>
                         <span>기타</span>
                         <p>
-                            <label><input type="radio" name="payment" value="type3"/>휴대폰결제</label>
+                            <label><input type="radio" name="payment" value="5"/>휴대폰결제</label>
                             <label>
-                                <input type="radio" name="payment" value="type4"/>카카오페이
+                                <input type="radio" name="payment" value="6"/>카카오페이
                                 <img src="../img/ico_kakaopay.gif" alt="카카오페이"/>
                             </label>                                
                         </p>
