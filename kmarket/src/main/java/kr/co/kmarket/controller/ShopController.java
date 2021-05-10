@@ -17,6 +17,7 @@ import com.google.gson.JsonObject;
 import kr.co.kmarket.service.ShopService;
 import kr.co.kmarket.vo.CartVo;
 import kr.co.kmarket.vo.MemberVo;
+import kr.co.kmarket.vo.OrderDetailVo;
 import kr.co.kmarket.vo.OrderVo;
 import kr.co.kmarket.vo.ProductVo;
 
@@ -130,10 +131,14 @@ public class ShopController {
 	@PostMapping("/shop/order")
 	public String order(OrderVo vo) {
 		
-		int result = service.insertOrder(vo);
+		int orderId = service.insertOrder(vo);
+
+		for(int code : vo.getCodes()) {		
+			service.insertOrderDetail(orderId, code);
+		}
 		
 		JsonObject json = new JsonObject();
-		json.addProperty("result", result);
+		json.addProperty("result", orderId);
 		
 		return new Gson().toJson(json);
 	}

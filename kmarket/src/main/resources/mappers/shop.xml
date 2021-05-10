@@ -64,18 +64,8 @@
 		</foreach>		
 	</delete>
 	
-	<!-- 
-	<insert id="insertOrder">		
-		INSERT IGNORE INTO `km_product_order` 
-		(`seq`, `uid`, `code`, `name`, `count`, `price`, `discount`, `point`, `delivery`, `total`, `rdate`)
-		SELECT `seq`, `uid`, `code`, `name`, `count`, `price`, `discount`, `point`, `delivery`, `total`, NOW()
-		FROM `km_product_cart` WHERE `seq` IN
-		<foreach collection="array" item="seq" open="(" close=")" separator=",">
-			#{seq}
-		</foreach>
-	</insert>
-	-->
-	<insert id="insertOrder">
+	
+	<insert id="insertOrder" useGeneratedKeys="true" keyProperty="orderId">
 		INSERT INTO `km_product_order` SET
 		`uid`=#{uid},
 		`count`=#{count},
@@ -87,8 +77,9 @@
 		`rdate`=NOW();			
 	</insert>
 	
-	
-	
+	<insert id="insertOrderDetail">		
+		INSERT INTO `km_product_order_detail` (`orderId`, `code`) VALUES (#{orderId}, #{code});
+	</insert>
 	
 	<select id="selectOrder" resultType="kr.co.kmarket.vo.OrderVo">
 		SELECT a.*, b.cate1, b.cate2, b.thumb1 FROM `km_product_order` AS a

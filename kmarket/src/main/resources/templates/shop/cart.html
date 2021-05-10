@@ -163,6 +163,14 @@
 	$(function(){
 		
 		$('input[name=order]').click(function(){
+			
+			var checkedProducts = $('.product_check:checked');
+			var codes = [];
+			
+			checkedProducts.each(function(i, product){				
+				codes.push(product.name);				
+			});
+			
 			var uid      = [[${session.smember.uid}]];
 			var count    = $('.info .count').text().replace(/,/g, '');
 			var price    = $('.info .price').text().replace(/,/g, '');
@@ -178,7 +186,8 @@
 					"discount": discount,
 					"delivery": delivery,
 					"point": point,
-					"total": total
+					"total": total,
+					"codes": codes
 					};
 			
 			$.ajax({
@@ -232,7 +241,7 @@
                 <td colspan="7">장바구니에 상품이 없습니다.</td>
               </tr>
               <tr th:each="product:${products}">
-                <td><input type="checkbox" class="product_check" th:value="${product.seq}" checked></td>
+                <td><input type="checkbox" class="product_check" th:name="${product.code}" th:value="${product.seq}" checked></td>
                 <td>
                   <article>
                     <a href="#"><img th:src="@{/thumb/{code1}/{code2}/{img}(code1=${product.cate1}, code2=${product.cate2}, img=${product.thumb1})}" alt=""></a>
