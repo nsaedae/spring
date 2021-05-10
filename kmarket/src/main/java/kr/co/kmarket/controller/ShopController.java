@@ -121,6 +121,18 @@ public class ShopController {
 		return "/shop/order";
 	}
 	
+	@ResponseBody
+	@PostMapping("/shop/order")
+	public String order(int[] cartSeqs) {
+		
+		int result = service.insertOrder(cartSeqs);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("result", result);
+		
+		return new Gson().toJson(json);
+	}
+	
 	@GetMapping("/shop/order-complete")
 	public String orderComplete() {
 		return "/shop/order-complete";

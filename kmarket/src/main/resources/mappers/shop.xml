@@ -64,6 +64,15 @@
 		</foreach>		
 	</delete>
 	
+	<insert id="insertOrder">		
+		INSERT INTO `km_product_order` 
+		(`uid`, `code`, `name`, `count`, `price`, `discount`, `point`, `delivery`, `total`, `rdate`)
+		SELECT `uid`, `code`, `name`, `count`, `price`, `discount`, `point`, `delivery`, `total`, NOW()
+		FROM `km_product_cart` WHERE `seq` IN
+		<foreach collection="array" item="seq" open="(" close=")" separator=",">
+			#{seq}
+		</foreach>
+	</insert>
 	
 
 </mapper>

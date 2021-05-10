@@ -157,6 +157,35 @@
 				}
 			});
 		});
+	}); // 삭제하기 끝
+	
+	// 주문하기
+	$(function(){
+		
+		$('input[name=order]').click(function(){
+			
+			var checkedProducts = $('.product_check:checked');
+			var cartSeqs = [];
+			
+			checkedProducts.each(function(i, product){				
+				cartSeqs.push(product.value);				
+			});
+			
+			var params = {"cartSeqs": cartSeqs};
+			
+			$.ajax({
+				url: '/kmarket/shop/order',
+				type: 'post',
+				traditional: true,
+				data: params,
+				dataType: 'json',
+				success: function(data){
+					location.href='/kmarket/shop/order';	
+				}
+			});						
+			
+		});	
+		
 	});
 	
 </script>
