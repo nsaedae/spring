@@ -121,11 +121,6 @@ public class ShopController {
 	public String order(HttpSession sess, Model model) {
 		
 		MemberVo member = (MemberVo)sess.getAttribute("smember");		
-		String uid = member.getUid();
-		
-		List<OrderVo> orders = service.selectOrder(uid);
-		
-		model.addAttribute("orders", orders);
 		model.addAttribute("member", member);
 		
 		return "/shop/order";
@@ -133,9 +128,9 @@ public class ShopController {
 	
 	@ResponseBody
 	@PostMapping("/shop/order")
-	public String order(int[] cartSeqs) {
+	public String order(OrderVo vo) {
 		
-		int result = service.insertOrder(cartSeqs);
+		int result = service.insertOrder(vo);
 		
 		JsonObject json = new JsonObject();
 		json.addProperty("result", result);

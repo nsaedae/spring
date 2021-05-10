@@ -64,6 +64,7 @@
 		</foreach>		
 	</delete>
 	
+	<!-- 
 	<insert id="insertOrder">		
 		INSERT IGNORE INTO `km_product_order` 
 		(`seq`, `uid`, `code`, `name`, `count`, `price`, `discount`, `point`, `delivery`, `total`, `rdate`)
@@ -73,6 +74,21 @@
 			#{seq}
 		</foreach>
 	</insert>
+	-->
+	<insert id="insertOrder">
+		INSERT INTO `km_product_order` SET
+		`uid`=#{uid},
+		`count`=#{count},
+		`price`=#{price},
+		`discount`=#{discount},
+		`delivery`=#{delivery},
+		`point`=#{point},
+		`total`=#{total},
+		`rdate`=NOW();			
+	</insert>
+	
+	
+	
 	
 	<select id="selectOrder" resultType="kr.co.kmarket.vo.OrderVo">
 		SELECT a.*, b.cate1, b.cate2, b.thumb1 FROM `km_product_order` AS a

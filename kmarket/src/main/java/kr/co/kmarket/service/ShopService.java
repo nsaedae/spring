@@ -45,8 +45,8 @@ public class ShopService {
 		return dao.deleteCart(cartSeqs);
 	}
 	
-	public int insertOrder(int[] cartSeqs) {
-		return dao.insertOrder(cartSeqs);
+	public int insertOrder(OrderVo vo) {
+		return dao.insertOrder(vo);
 	}
 	public List<OrderVo> selectOrder(String uid){
 		return dao.selectOrder(uid);

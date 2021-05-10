@@ -3,7 +3,7 @@
 <th:block th:include="@{_header.html}"/>
 <script>
 	// 최초 집계 실행
-	aggregateProduct();
+	// aggregateProduct();
 
 	function aggregateProduct() {	
 		//전체합계 집계
@@ -112,25 +112,7 @@
                       <tr class="empty">
                         <td colspan="7">장바구니에 상품이 없습니다.</td>
                       </tr>
-                      <tr class="order" th:each="order:${orders}">
-		                <td>
-		                  <article>
-		                    <a href="#"><img th:src="@{/thumb/{code1}/{code2}/{img}(code1=${order.cate1}, code2=${order.cate2}, img=${order.thumb1})}" alt=""></a>
-		                    <div>
-		                      <h2><a href="#">[[${order.name}]]</a></h2>
-		                      <p></p>
-		                    </div>
-		                  </article>
-		                </td>
-		                <td class="count">[[${order.count}]]</td>
-		                <td class="price">[[${#numbers.formatInteger(order.price, 3, 'COMMA')}]]</td>
-		                <td class="discount" th:if="${order.discount} > 0">[[${order.discount}]]%</td>
-		                <td class="discount" th:unless="${order.discount} > 0">-</td>
-		                <td class="point">[[${order.point}]]</td>
-		                <td class="delivery" th:if="${order.delivery} == 0">무료배송</td>
-		                <td class="delivery" th:unless="${order.delivery} == 0">[[${#numbers.formatInteger(order.delivery, 3, 'COMMA')}]]</td>
-		                <td class="total">[[${#numbers.formatInteger(order.total, 3, 'COMMA')}]]</td>
-                      </tr>
+                      
                     </tbody>
                   </table>                      
             </div>
@@ -178,7 +160,7 @@
                     <div>
                         <p>현재 포인트 : <span>[[${member.point}]]</span>점</p>
                         <label>
-                            <input type="text" name="point" />점
+                            <input type="text" name="point" value="0"/>점
                             <input type="button" value="적용"/>
                         </label>
                         <span>포인트 5,000점 이상이면 현금처럼 사용 가능합니다.</span>
