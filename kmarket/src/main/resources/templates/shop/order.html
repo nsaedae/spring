@@ -1,6 +1,97 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="@{_header.html}"/>
+<script>
+	// 최초 집계 실행
+	aggregateProduct();
+
+	function aggregateProduct() {	
+		//전체합계 집계
+		$(function(){
+			
+			//var checkedProduct = $('.product_check:checked').parent().parent();
+								
+			// 상품 수 집계
+			var tagCount = $('.count');
+			var totCount = 0;
+			
+			$.each(tagCount, function(){
+				var count = parseInt($(this).text());
+				totCount += count;
+			});
+			
+			$('.info tr:nth-child(1) > td:nth-child(2)').text(totCount);
+			
+			// 판매가 집계
+			var tagPrice = $('.price');
+			var totPrice = 0;
+			
+			$.each(tagPrice, function(){
+				var price = parseInt($(this).text().replace(/,/g, ''));					
+				totPrice += price;
+			});
+			
+			$('.info tr:nth-child(2) > td:nth-child(2)').text(totPrice.toLocaleString());
+			
+			// 할인금액 집계
+			var tagDiscount = $('.discount');
+			var totDiscount = 0;
+			
+			$.each(tagDiscount, function(){
+				
+				var discount = $(this).text().replace(/%/g, '')
+				
+				if(discount != '-'){
+					var price = $(this).prev().text().replace(/,/g, '');
+					totDiscount += parseInt(price * discount / 100);
+				}								
+			});
+			
+			$('.info tr:nth-child(3) > td:nth-child(2)').text(totDiscount.toLocaleString());
+			
+			// 배송비 집계
+			var tagDelivery = $('.delivery');
+			var totDelivery = 0;
+			
+			$.each(tagDelivery, function(){
+				
+				var delivery = $(this).text().replace(/,/g, '');
+				
+				if(delivery != '무료배송'){				
+					totDelivery += parseInt(delivery);
+				}
+			});
+			
+			$('.info tr:nth-child(4) > td:nth-child(2)').text(totDelivery.toLocaleString());
+			
+			// 포인트 집계
+			var tagPoint = $('.point');
+			var totPoint = 0;
+			
+			$.each(tagPoint, function(){
+				
+				var point = $(this).text().replace(/,/g, '');							
+				totPoint += parseInt(point);				
+			});
+			
+			$('.info tr:nth-child(5) > td:nth-child(2)').text(totPoint.toLocaleString());
+			
+			// 전체주문금액(소계) 집계
+			var tagTotal = $('.total');
+			var totTotal = 0;
+			
+			$.each(tagTotal, function(){				
+				var total = $(this).text().replace(/,/g, '');							
+				totTotal += parseInt(total);							
+			});
+			
+			$('.info tr:nth-child(6) > td:nth-child(2)').text(totTotal.toLocaleString());
+			
+		});
+		
+	} // aggregateProduct function end	
+	
+</script>
 <main>
     <th:block th:include="@{_category.html}"/>
 
@@ -21,45 +112,36 @@
                     <thead>
                       <tr>
                         <th>상품명</th>
-                        <th>총수량</th>
-                        <th>판매가</th>
-                        <th>배송비</th>
-                        <th>소계</th>
+		                <th>총수량</th>
+		                <th>판매가</th>
+		                <th>할인</th>
+		                <th>포인트</th>
+		                <th>배송비</th>
+		                <th>소계</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr class="empty">
                         <td colspan="7">장바구니에 상품이 없습니다.</td>
                       </tr>
-                      <tr>
-                        <td>
-                          <article>
-                            <a href="#"><img src="../img/thumb-sample-t2.jpg" alt=""></a>
-                            <div>
-                              <h2><a href="#">TH-블락체크 셔츠-그레이2 [면세]</a></h2>
-                              <p>SIZE:M / COLOR:블루 1개</p>
-                            </div>
-                          </article>
-                        </td>
-                        <td>1</td>
-                        <td>27,000</td>
-                        <td>무료배송</td>
-                        <td>27,000</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <article>
-                            <a href="#"><img src="../img/thumb-sample-t1.jpg" alt=""></a>
-                            <div>
-                              <h2><a href="#">TH-블락체크 셔츠-그레이2 [면세]</a></h2>
-                              <p>SIZE:M / COLOR:블루 1개</p>
-                            </div>
-                          </article>
-                        </td>
-                        <td>1</td>
-                        <td>27,000</td>
-                        <td>무료배송</td>
-                        <td>27,000</td>
+                      <tr th:each="order:${orders}">
+		                <td>
+		                  <article>
+		                    <a href="#"><img th:src="@{/thumb/{code1}/{code2}/{img}(code1=${order.cate1}, code2=${order.cate2}, img=${order.thumb1})}" alt=""></a>
+		                    <div>
+		                      <h2><a href="#">[[${order.name}]]</a></h2>
+		                      <p></p>
+		                    </div>
+		                  </article>
+		                </td>
+		                <td class="count">[[${order.count}]]</td>
+		                <td class="price">[[${#numbers.formatInteger(order.price, 3, 'COMMA')}]]</td>
+		                <td class="discount" th:if="${order.discount} > 0">[[${order.discount}]]%</td>
+		                <td class="discount" th:unless="${order.discount} > 0">-</td>
+		                <td class="point">[[${order.point}]]</td>
+		                <td class="delivery" th:if="${order.delivery} == 0">무료배송</td>
+		                <td class="delivery" th:unless="${order.delivery} == 0">[[${#numbers.formatInteger(order.delivery, 3, 'COMMA')}]]</td>
+		                <td class="total">[[${#numbers.formatInteger(order.total, 3, 'COMMA')}]]</td>
                       </tr>
                     </tbody>
                   </table>                      
@@ -71,32 +153,32 @@
                   <table>
                     <tr>
                       <td>주문자</td>
-                      <td><input type="text" name="orderer" /></td>
+                      <td><input type="text" name="orderer" th:value="${member.name}" /></td>
                     </tr>
                     <tr>
                       <td>휴대폰</td>
                       <td>
-                        <input type="text" name="hp" />
+                        <input type="text" name="hp" th:value="${member.hp}"/>
                         <span>- 포함 입력</span>
                       </td>
                     </tr>
                     <tr>
                       <td>우편번호</td>
                       <td>
-                        <input type="text" name="zip"/>
+                        <input type="text" name="zip" th:value="${member.zip}"/>
                         <input type="button" value="검색"/>
                       </td>
                     </tr>
                     <tr>
                       <td>기본주소</td>
                       <td>
-                        <input type="text" name="addr1"/>
+                        <input type="text" name="addr1" th:value="${member.addr1}"/>
                       </td>
                     </tr>
                     <tr>
                       <td>상세주소</td>
                       <td>
-                        <input type="text" name="addr2"/>
+                        <input type="text" name="addr2" th:value="${member.addr2}"/>
                       </td>
                     </tr>
                   </table>
@@ -106,7 +188,7 @@
                     <h1>할인정보</h1>
 
                     <div>
-                        <p>현재 포인트 : <span>7200</span>점</p>
+                        <p>현재 포인트 : <span>[[${member.point}]]</span>점</p>
                         <label>
                             <input type="text" name="point" />점
                             <input type="button" value="적용"/>
@@ -156,15 +238,15 @@
                     <table border="0">
                       <tr>
                         <td>총</td>
-                        <td>2 건</td>
+                        <td>0</td>
                       </tr>
                       <tr>
                         <td>상품금액</td>
-                        <td>27,000</td>
+                        <td>0</td>
                       </tr>
                       <tr>
                         <td>할인금액</td>
-                        <td>-1,000</td>
+                        <td>0</td>
                       </tr>
                       <tr>
                         <td>배송비</td>
@@ -172,11 +254,11 @@
                       </tr>
                       <tr>
                         <td>포인트 할인</td>
-                        <td>-1000</td>
+                        <td>0</td>
                       </tr>
                       <tr>
                         <td>전체주문금액</td>
-                        <td>25,000</td>
+                        <td>0</td>
                       </tr>
                       
                     </table>

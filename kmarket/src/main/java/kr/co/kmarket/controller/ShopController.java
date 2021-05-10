@@ -17,6 +17,7 @@ import com.google.gson.JsonObject;
 import kr.co.kmarket.service.ShopService;
 import kr.co.kmarket.vo.CartVo;
 import kr.co.kmarket.vo.MemberVo;
+import kr.co.kmarket.vo.OrderVo;
 import kr.co.kmarket.vo.ProductVo;
 
 @Controller
@@ -117,7 +118,16 @@ public class ShopController {
 	
 	
 	@GetMapping("/shop/order")
-	public String order() {
+	public String order(HttpSession sess, Model model) {
+		
+		MemberVo member = (MemberVo)sess.getAttribute("smember");		
+		String uid = member.getUid();
+		
+		List<OrderVo> orders = service.selectOrder(uid);
+		
+		model.addAttribute("orders", orders);
+		model.addAttribute("member", member);
+		
 		return "/shop/order";
 	}
 	
