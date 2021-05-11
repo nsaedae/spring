@@ -52,8 +52,8 @@ public class ShopService {
 	public int insertOrderDetail(int orderId, int code) {
 		return dao.insertOrderDetail(orderId, code);
 	}
-	public List<OrderVo> selectOrder(String uid){
-		return dao.selectOrder(uid);
+	public List<OrderVo> selectOrder(String uid, int orderId){
+		return dao.selectOrder(uid, orderId);
 	}
 }
 

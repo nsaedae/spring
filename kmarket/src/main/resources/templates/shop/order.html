@@ -112,7 +112,25 @@
                       <tr class="empty">
                         <td colspan="7">장바구니에 상품이 없습니다.</td>
                       </tr>
-                      
+                      <tr th:each="product:${products}">		                
+		                <td>
+		                  <article>
+		                    <a href="#"><img th:src="@{/thumb/{code1}/{code2}/{img}(code1=${product.cate1}, code2=${product.cate2}, img=${product.thumb1})}" alt=""></a>
+		                    <div>
+		                      <h2><a href="#">[[${product.pName}]]</a></h2>
+		                      <p></p>
+		                    </div>
+		                  </article>
+		                </td>
+		                <td class="count">1</td>
+		                <td class="price">[[${#numbers.formatInteger(product.pPrice, 3, 'COMMA')}]]</td>
+		                <td class="discount" th:if="${product.pDiscount} > 0">[[${product.pDiscount}]]%</td>
+		                <td class="discount" th:unless="${product.pDiscount} > 0">-</td>
+		                <td class="point">[[${product.pPoint}]]</td>
+		                <td class="delivery" th:if="${product.pDelivery} == 0">무료배송</td>
+		                <td class="delivery" th:unless="${product.pDelivery} == 0">[[${#numbers.formatInteger(product.pDelivery, 3, 'COMMA')}]]</td>
+		                <td class="total">[[${#numbers.formatInteger(product.pTotal, 3, 'COMMA')}]]</td>
+		              </tr>
                     </tbody>
                   </table>                      
             </div>

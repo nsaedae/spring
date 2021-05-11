@@ -117,12 +117,16 @@ public class ShopController {
 		return new Gson().toJson(json);
 	}
 	
-	
 	@GetMapping("/shop/order")
-	public String order(HttpSession sess, Model model) {
+	public String order(HttpSession sess, Model model, int orderId) {
 		
-		MemberVo member = (MemberVo)sess.getAttribute("smember");		
+		MemberVo member = (MemberVo)sess.getAttribute("smember");
+		String uid = member.getUid();
+		
+		List<OrderVo> products = service.selectOrder(uid, orderId);
+		
 		model.addAttribute("member", member);
+		model.addAttribute("products", products);
 		
 		return "/shop/order";
 	}
@@ -131,14 +135,19 @@ public class ShopController {
 	@PostMapping("/shop/order")
 	public String order(OrderVo vo) {
 		
-		int orderId = service.insertOrder(vo);
+		service.insertOrder(vo);
+		
+		// 방금 INSERT한 orderId값을 구한다.
+		int orderId = vo.getOrderId();
+				
+		System.out.println("orderId :"+orderId);
 
 		for(int code : vo.getCodes()) {		
 			service.insertOrderDetail(orderId, code);
 		}
 		
 		JsonObject json = new JsonObject();
-		json.addProperty("result", orderId);
+		json.addProperty("orderId", orderId);
 		
 		return new Gson().toJson(json);
 	}

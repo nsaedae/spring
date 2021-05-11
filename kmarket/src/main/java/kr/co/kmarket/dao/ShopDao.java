@@ -24,7 +24,7 @@ public interface ShopDao {
 	public int insertOrder(OrderVo vo);
 	public int insertOrderDetail(int orderId, int code);
 	
-	public List<OrderVo> selectOrder(String uid);
+	public List<OrderVo> selectOrder(String uid, int orderId);
 	
 	
 	

@@ -197,7 +197,8 @@
 				data: params,
 				dataType: 'json',
 				success: function(data){
-					location.href='/kmarket/shop/order';	
+					// 주문하기로 이동
+					location.href='/kmarket/shop/order?orderId='+data.orderId;	
 				}
 			});						
 			
