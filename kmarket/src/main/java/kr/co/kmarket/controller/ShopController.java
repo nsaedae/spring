@@ -127,6 +127,7 @@ public class ShopController {
 		
 		model.addAttribute("member", member);
 		model.addAttribute("products", products);
+		model.addAttribute("infoData", products.get(0));
 		
 		return "/shop/order";
 	}

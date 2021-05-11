@@ -2,82 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="@{_header.html}"/>
 <script>
-	// 최초 집계 실행
-	// aggregateProduct();
-
-	function aggregateProduct() {	
-		//전체합계 집계
-		$(function(){
-			
-			//var checkedProduct = $('.product_check:checked').parent().parent();
-								
-			// 상품 수 집계
-			var tagCount = $('.order > .count');
-			var totCount = 0;
-			
-			$.each(tagCount, function(){
-				var count = parseInt($(this).text());
-				totCount += count;
-			});
-			
-			$('.info tr:nth-child(1) > td:nth-child(2)').text(totCount);
-			
-			// 판매가 집계
-			var tagPrice = $('.order > .price');
-			var totPrice = 0;
-			
-			$.each(tagPrice, function(){
-				var price = parseInt($(this).text().replace(/,/g, ''));					
-				totPrice += price;
-			});
-			
-			$('.info tr:nth-child(2) > td:nth-child(2)').text(totPrice.toLocaleString());
-			
-			// 할인금액 집계
-			var tagDiscount = $('.order > .discount');
-			var totDiscount = 0;
-			
-			$.each(tagDiscount, function(){
-				
-				var discount = $(this).text().replace(/%/g, '')
-				
-				if(discount != '-'){
-					var price = $(this).prev().text().replace(/,/g, '');
-					totDiscount += parseInt(price * discount / 100);
-				}								
-			});
-			
-			$('.info tr:nth-child(3) > td:nth-child(2)').text(totDiscount.toLocaleString());
-			
-			// 배송비 집계
-			var tagDelivery = $('.order > .delivery');
-			var totDelivery = 0;
-			
-			$.each(tagDelivery, function(){
-				
-				var delivery = $(this).text().replace(/,/g, '');
-				
-				if(delivery != '무료배송'){				
-					totDelivery += parseInt(delivery);
-				}
-			});
-			
-			$('.info tr:nth-child(4) > td:nth-child(2)').text(totDelivery.toLocaleString());
-			
-			// 전체주문금액(소계) 집계
-			var tagTotal = $('.order > .total');
-			var totTotal = 0;
-			
-			$.each(tagTotal, function(){				
-				var total = $(this).text().replace(/,/g, '');							
-				totTotal += parseInt(total);							
-			});
-			
-			$('.info tr:nth-child(6) > td:nth-child(2)').text(totTotal.toLocaleString());
-			
-		});
-		
-	} // aggregateProduct function end	
+	
 	
 </script>
 <main>
@@ -226,19 +151,19 @@
                     <table border="0">
                       <tr>
                         <td>총</td>
-                        <td>0</td>
+                        <td>[[${infoData.count}]]</td>
                       </tr>
                       <tr>
                         <td>상품금액</td>
-                        <td>0</td>
+                        <td>[[${infoData.price}]]</td>
                       </tr>
                       <tr>
                         <td>할인금액</td>
-                        <td>0</td>
+                        <td>[[${infoData.discount}]]</td>
                       </tr>
                       <tr>
                         <td>배송비</td>
-                        <td>0</td>
+                        <td>[[${infoData.delivery}]]</td>
                       </tr>
                       <tr>
                         <td>포인트 할인</td>
@@ -246,7 +171,7 @@
                       </tr>
                       <tr>
                         <td>전체주문금액</td>
-                        <td>0</td>
+                        <td>[[${infoData.total}]]</td>
                       </tr>
                       
                     </table>
