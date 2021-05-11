@@ -2,7 +2,68 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="@{_header.html}"/>
 <script>
-	
+	$(function(){
+		
+		// 포인트 할인적용
+		$('input[name=pointBtn]').click(function(){
+			
+			var applyPoint   = Number($('input[name=point]').val());
+			
+			if(applyPoint > 0){
+			
+				var currentPoint = Number($('.currentPoint').text().replace(/,/g, ''));
+				var finalTotal   = Number($('.final').text().replace(/,/g, ''));
+				
+				currentPoint -= applyPoint; 
+				finalTotal -= applyPoint;
+				
+				$('.currentPoint').text(currentPoint.toLocaleString())
+				$('.pointDiscount').text(applyPoint.toLocaleString())
+				$('.final').text(finalTotal.toLocaleString());
+				$('input[name=point]').val(0);
+			}else{
+				alert('적용할 포인트를 입력하세요.');
+			}
+			
+		}); // 포인트 할인 적용 끝
+		
+		// 최종 주문하기
+		$('input[name=finalOrder]').click(function(){
+			var orderId  = $('input[name=orderId]').val();
+			var orderer  = $('input[name=orderer]').val();
+			var hp      = $('input[name=hp]').val();
+			var zip     = $('input[name=zip]').val();
+			var addr1   = $('input[name=addr1]').val();
+			var addr2   = $('input[name=addr2]').val();
+			var payment = $('input[name=payment]').val();
+			var pointDiscount = $('.pointDiscount').text().replace(/,/g, '');
+			
+			var params = {
+				'orderId': orderId,
+				'orderer': orderer,
+				'hp': hp,
+				'zip': zip,
+				'addr1': addr1,
+				'addr2': addr2,
+				'payment': payment,
+				'pointDiscount': pointDiscount
+			};						
+			
+			$.ajax({
+				url: '/kmarket/shop/order-complete',
+				type: 'post',
+				data: params,
+				dataType: 'json',
+				success: function(data){
+					alert('주문완료!');
+				}
+			});
+		});// 최종 주문하기 끝
+		
+		
+		
+		
+	});
 	
 </script>
 <main>
@@ -99,12 +160,11 @@
 
                 <article class="discount">
                     <h1>할인정보</h1>
-
                     <div>
-                        <p>현재 포인트 : <span>[[${member.point}]]</span>점</p>
+                        <p>현재 포인트 : <span class="currentPoint">[[${member.point}]]</span>점</p>
                         <label>
                             <input type="text" name="point" value="0"/>점
-                            <input type="button" value="적용"/>
+                            <input type="button" name="pointBtn" value="적용"/>
                         </label>
                         <span>포인트 5,000점 이상이면 현금처럼 사용 가능합니다.</span>
                     </div>
@@ -148,6 +208,7 @@
 
                 <div class="info">
                     <h2>최종결제 정보</h2>
+                    <input type="hidden" name="orderId" th:value="${infoData.orderId}"/>
                     <table border="0">
                       <tr>
                         <td>총</td>
@@ -155,27 +216,27 @@
                       </tr>
                       <tr>
                         <td>상품금액</td>
-                        <td>[[${infoData.price}]]</td>
+                        <td>[[${#numbers.formatInteger(infoData.price, 3, 'COMMA')}]]</td>
                       </tr>
                       <tr>
                         <td>할인금액</td>
-                        <td>[[${infoData.discount}]]</td>
+                        <td>[[${#numbers.formatInteger(infoData.discount, 3, 'COMMA')}]]</td>
                       </tr>
                       <tr>
                         <td>배송비</td>
-                        <td>[[${infoData.delivery}]]</td>
+                        <td>[[${#numbers.formatInteger(infoData.delivery, 3, 'COMMA')}]]</td>
                       </tr>
                       <tr>
                         <td>포인트 할인</td>
-                        <td>0</td>
+                        <td class="pointDiscount">0</td>
                       </tr>
                       <tr>
                         <td>전체주문금액</td>
-                        <td>[[${infoData.total}]]</td>
+                        <td class="final">[[${#numbers.formatInteger(infoData.total, 3, 'COMMA')}]]</td>
                       </tr>
                       
                     </table>
-                    <input type="button" name="" value="결제하기">
+                    <input type="button" name="finalOrder" value="결제하기"/>
         
                   </div>
             </section>                

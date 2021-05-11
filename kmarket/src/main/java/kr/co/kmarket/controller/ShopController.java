@@ -158,6 +158,10 @@ public class ShopController {
 		return "/shop/order-complete";
 	}
 	
+	@PostMapping("/shop/order-complete")
+	public String orderComplete(OrderVo vo) {
+		return "/shop/order-complete";
+	}
 	
 	
 }

@@ -99,6 +99,20 @@
 		ON b.code = c.code
 		WHERE `uid`=#{uid} AND a.`orderId`=#{orderId};
 	</select>
+	
+	<update id="updateOrder">
+		UPDATE `km_product_order` SET
+		`orderer`=#{orderer},
+		`hp`=#{hp},
+		`zip`=#{zip},
+		`addr1`=#{addr1},
+		`addr2`=#{addr2},
+		`payment`=#{payment},
+		`complete`=1,
+		`completeDate`=NOW()
+		WHERE `orderId`=#{orderId};	
+	</update>	
+	
 
 </mapper>
 

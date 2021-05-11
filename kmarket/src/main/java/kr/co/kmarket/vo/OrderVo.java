@@ -14,9 +14,15 @@ public class OrderVo {
 	private int point;
 	private int delivery;
 	private int total;
+	private String orderer;
+	private String hp;
+	private String zip;
+	private String addr1;
+	private String addr2;
 	private int payment;
 	private int complete;
 	private String rdate;
+	private String completeDate;
 		
 	// 추가필드 I
 	private int cate1;
